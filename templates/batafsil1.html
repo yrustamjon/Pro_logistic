@@ -1,0 +1,704 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="service-detail">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                <li><a href="{% url 'service' %}">Xizmatlar</a></li>
+                <li><a href="{% url 'furniture' %}">Stol-Stul</a></li>
+                <li class="active">{{service.name}}</li>
+            </ul>
+        </nav>
+
+        <!-- Service Hero Section with Image Slider -->
+        <div class="service-hero">
+            <!-- Image Slider -->
+            <div class="hero-slider">
+                <div class="slider-track">
+                    {%for i in images%}
+                    <div class="slide">
+                        <img src="{{ i.image.url }}" alt="{{ service.name }} {{ forloop.counter }}">
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+            
+            <!-- Dark overlay -->
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <h1 class="hero-title">{{service.name}}</h1>
+                    <p class="hero-description">
+                       {{service.description}}
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'contact' %}" class="btn-secondary">Batafsil Ma'lumot</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <button class="slider-btn prev-btn" onclick="moveSlide(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-btn next-btn" onclick="moveSlide(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Slider Dots -->
+            <div class="slider-dots">
+                {% for i in images %}
+                <span class="dot {% if forloop.first %}active{% endif %}" onclick="currentSlide({{ forloop.counter }})"></span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h2 class="section-title">Xizmatimiz Haqida</h2>
+
+        <!-- Info + Video + Photo Section -->
+        <div class="service-info-section">
+            <!-- Info Box -->
+            <div class="info-box">
+                <h3>Umumiy Ma'lumot</h3>
+                <p>
+                    {{ service.big_description }}
+                </p>
+            </div>
+
+            <!-- Video -->
+            {% if service.video_url %}
+            <div class="video-container">
+                <iframe src="{{ service.video_url }}"
+                        title="Video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
+            </div>
+            {% endif %}
+
+            <!-- Additional Images Slider -->
+            <div style="text-align: center; margin-top: 40px;">
+                {% if images %}
+                <div class="swiper-container-wrapper">
+                    <div class="swiper her-swiper">
+                        <div class="swiper-wrapper">
+                            {% for i in images %}
+                            <div class="swiper-slide">
+                                <div class="slide-image-container">
+                                    <img src="{{ i.image.url }}" alt="{{ service.name }} {{ forloop.counter }}" loading="lazy">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="swiper-button-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                        
+                        <!-- Scrollbar -->
+                        <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section" id="contact">
+            <div class="cta-content">
+                <h2>Xizmatimizdan Foydalaning</h2>
+                <p>Biz bilan bog'lanib, bepul konsultatsiya oling</p>
+                <div class="cta-buttons">
+                    <a href="tel:+998901234567" class="btn-primary">
+                        <i class="fas fa-phone"></i>
+                        Qo'ng'iroq Qilish
+                    </a>
+                    <a href="https://t.me/pro_logistic" class="btn-secondary">
+                        <i class="fab fa-telegram"></i>
+                        Telegram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Breadcrumb Styles */
+    .breadcrumb {
+        margin-bottom: 30px;
+    }
+
+    .breadcrumb ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex-wrap: wrap;
+    }
+
+    .breadcrumb li {
+        margin-right: 10px;
+    }
+
+    .breadcrumb li:not(:last-child)::after {
+        content: '/';
+        margin-left: 10px;
+        color: #666;
+    }
+
+    .breadcrumb a {
+        color: #666;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+        color: #E53935;
+    }
+
+    .breadcrumb .active {
+        color: #E53935;
+        font-weight: 600;
+    }
+
+    /* Hero Section with Slider */
+    .service-hero {
+        position: relative;
+        height: 600px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 50px;
+    }
+
+    .hero-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .slider-track {
+        display: flex;
+        width: {% widthratio images|length 1 100 %}%;
+        height: 100%;
+        transition: transform 0.5s ease;
+    }
+
+    .slide {
+        width: {% widthratio 100 images|length 1 %}%;
+        height: 100%;
+        flex-shrink: 0;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: center;
+        abject-position: center;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        z-index: 2;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: 0 20px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .hero-description {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        opacity: 0.9;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Slider Controls */
+    .slider-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 3;
+        transform: translateY(-50%);
+    }
+
+    .slider-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    .slider-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    /* Slider Dots */
+    .slider-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 3;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .dot.active {
+        background: white;
+        transform: scale(1.2);
+    }
+
+    /* IMPROVED SWIPER STYLES - RASM TO'LIQ KO'RINISHI UCHUN */
+    .swiper-container-wrapper {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .her-swiper {
+        width: 100%;
+        height: 500px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        background: #f8f9fa;
+    }
+
+    .her-swiper .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 20px;
+    }
+
+    .slide-image-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    /* MUHIM: Rasm to'liq ko'rinishi uchun */
+    .her-swiper img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 10px;
+        display: block;
+    }
+
+    /* Swiper Navigation Buttons */
+    .her-swiper .swiper-button-prev,
+    .her-swiper .swiper-button-next {
+        color: #E53935;
+        background: rgba(255, 255, 255, 0.95);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        border: 2px solid #E53935;
+    }
+
+    .her-swiper .swiper-button-prev:after,
+    .her-swiper .swiper-button-next:after {
+        font-size: 0;
+    }
+
+    .her-swiper .swiper-button-prev:hover,
+    .her-swiper .swiper-button-next:hover {
+        background: #E53935;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Swiper Pagination */
+    .her-swiper .swiper-pagination {
+        bottom: 10px;
+    }
+
+    .her-swiper .swiper-pagination-bullet {
+        width: 12px;
+        height: 12px;
+        background: white;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+        border: 2px solid #E53935;
+    }
+
+    .her-swiper .swiper-pagination-bullet-active {
+        background: #E53935;
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    /* Swiper Scrollbar */
+    .her-swiper .swiper-scrollbar {
+        background: rgba(0,0,0,0.1);
+        border-radius: 10px;
+        bottom: 5px;
+        height: 6px;
+        left: 10%;
+        width: 80%;
+    }
+
+    .her-swiper .swiper-scrollbar-drag {
+        background: #E53935;
+        border-radius: 10px;
+    }
+
+    /* Section Titles */
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 50px;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        border-radius: 2px;
+    }
+
+    /* Info Box */
+    .info-box {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+    }
+
+    .info-box h3 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    .info-box p {
+        color: #666;
+        line-height: 1.7;
+        font-size: 1.1rem;
+    }
+
+    /* Video Section */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        margin-bottom: 40px;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 30px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        color: white;
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+        background: white;
+        color: #2c3e50;
+        transform: translateY(-3px);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 80px 40px;
+        text-align: center;
+        color: white;
+        margin: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .cta-content h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .cta-content p {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .her-swiper {
+            height: 400px;
+        }
+
+        .cta-content h2 {
+            font-size: 2.2rem;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cta-buttons .btn-primary,
+        .cta-buttons .btn-secondary {
+            width: 250px;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .service-hero {
+            height: 500px;
+        }
+        
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .her-swiper {
+            height: 300px;
+        }
+        
+        .her-swiper .swiper-button-prev,
+        .her-swiper .swiper-button-next {
+            display: none;
+        }
+        
+        .info-box {
+            padding: 25px;
+        }
+        
+        .cta-section {
+            padding: 60px 20px;
+        }
+        
+        .cta-content h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    // Custom Slider Functionality
+    let currentSlide = 0;
+    const totalSlides = {{ images|length }};
+    const track = document.querySelector('.slider-track');
+    const dots = document.querySelectorAll('.dot');
+
+    function moveSlide(direction) {
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        updateSlider();
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        updateSlider();
+    }
+
+    function updateSlider() {
+        const slideWidth = 100 / totalSlides;
+        track.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    // Auto slide
+    setInterval(() => {
+        moveSlide(1);
+    }, 5000);
+
+    // Swiper Initialization
+    document.addEventListener('DOMContentLoaded', function() {
+        const herSwiper = new Swiper('.her-swiper', {
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            scrollbar: {
+                el: '.swiper-scrollbar',
+                draggable: true,
+            },
+            slidesPerView: 1,
+            grabCursor: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            effect: 'slide',
+            speed: 600,
+            preloadImages: true,
+            updateOnImagesReady: true,
+            // Rasm yuklanishini kuzatish
+            on: {
+                init: function () {
+                    console.log('Swiper initialized');
+                },
+                imagesReady: function () {
+                    this.update();
+                }
+            }
+        });
+
+        // Rasm yuklanishini alohida kuzatish
+        const images = document.querySelectorAll('.her-swiper img');
+        images.forEach(img => {
+            if (img.complete) {
+                herSwiper.update();
+            } else {
+                img.addEventListener('load', function() {
+                    herSwiper.update();
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

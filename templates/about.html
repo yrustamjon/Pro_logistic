@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- About Section -->
+    <section id="about" style="background: #f5f7fa;">
+      <div class="container">
+          <div class="about-content">
+              <div class="about-text">
+                <h2 style="text-align: center;">Pro Logistic Kompaniyasi Haqida</h2>
+
+                  <div class="about-img" >
+                    <img src="{% static 'images/logo.jpg' %}" alt="Pro Logistic Team" >
+                </div>
+                
+                  <p>Biz 10 yildan ortiq vaqt davomida mijozlarimizga ishonchli yuk tashish va ko'chirish xizmatlarini taqdim etib kelmoqdamiz. Tajribali jamoa va zamonaviy uskunalar bilan biz har qanday murakkablikdagi vazifalarni samarali bajaramiz.</p>
+                  <p>Bizning maqsadimiz - mijozlarimizning ishonchini qozonish va ularning ehtiyojlarini eng yuqori darajada qondirish.</p>
+                  
+                  <div class="about-stats">
+                      <div class="stat-item">
+                          <h3>210%</h3>
+                          <p>Mijozlar O'sishi</p>
+                      </div>
+                      <div class="stat-item">
+                          <h3>10+</h3>
+                          <p>Yillik Tajriba</p>
+                      </div>
+                      <div class="stat-item">
+                          <h3>5000+</h3>
+                          <p>Bajarilgan Loyihalar</p>
+                      </div>
+                  </div>
+              </div>
+              
+              
+          </div>
+      </div>
+    </section>
+{% endblock content %}

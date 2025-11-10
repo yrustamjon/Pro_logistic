@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Logistic - Yuk Tashish va Ko'chirish Xizmatlari</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Umumiy stillar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-left: 10px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--secondary);
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 3px;
+            transition: all 0.3s;
+            margin-left: 5px;
+        }
+
+        .lang-switcher button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            margin-left: auto;
+        }
+
+        /* Banner */
+        .banner {
+            margin-top: 80px;
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .banner h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .banner p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb li {
+            margin-right: 10px;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 10px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #E53935;
+        }
+
+        .breadcrumb .active {
+            color: #E53935;
+            font-weight: 600;
+        }
+
+        /* Services Banner */
+        .services-banner {
+            background: white;
+            padding: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .services-slider {
+            position: relative;
+            overflow: hidden;
+            height: 120px;
+        }
+
+        .services-track {
+            display: flex;
+            animation: slide 10s linear infinite;
+        }
+
+        .service-item {
+            min-width: 200px;
+            background: var(--light);
+            margin: 0 15px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-item i {
+            font-size: 24px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .service-item h4 {
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 500px; /* kartochka kattaligi maksimal */
+            max-height:500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-img {
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 proporsiya */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .service-content {
+            padding: 25px;
+        }
+
+        .service-content h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .service-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .about-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 36px;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .about-img {
+            width: 100%;              /* konteyner kengligi */
+            max-width: 400px;         /* maksimal kenglik */
+            margin: 0 auto;           /* konteynerni markazlash */
+            border-radius: 10px;
+            overflow: hidden;
+        
+            display: flex;
+            justify-content: center;  /* rasm gorizontal markazda */
+            align-items: center;      /* rasm vertikal markazda */
+            padding: 10px;            /* container ichida biroz bo‘sh joy */
+        }
+        
+        .about-img img {
+            max-width: 100%;           /* rasm containerga moslashadi */
+            height: auto;
+            display: block;
+        }
+        
+        
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            margin-right: 15px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-col p {
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .banner h2 {
+                font-size: 36px;
+            }
+            
+            .banner p {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 60px;        /* header balandligi */
+                right: 10px;      /* o'ng burchakdan boshlash */
+                width: 180px;     /* menyu kengligi */
+                background: white;
+                flex-direction: column;
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                border-radius: 5px;
+                z-index: 1000;
+            }
+        
+            .nav-menu.active {
+                display: flex;
+            }
+        
+            .nav-menu li {
+                margin: 10px 0;
+            }
+        
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1100; /* menyudan ustda bo‘lishi uchun */
+            }
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            gap: 10px;
+            font-family: sans-serif;
+        }
+        
+        .pagination a {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .pagination a:hover {
+            background: #007bff;
+            color: #fff;
+        }
+        
+        .pagination span {
+            padding: 8px 12px;
+            color: #555;
+        }
+        .highlight-btn {
+            display: inline-block;
+            padding: 10px 20px; /* kichikroq tugma */
+            font-size: 1rem;    /* matn kichikroq */
+            font-weight: bold;
+            color: #fff;
+            background: #ff5722; /* ajralib turadigan rang */
+            border: 2px solid #ff5722;
+            border-radius: 8px;
+            text-transform: uppercase;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight-btn:hover {
+            background: #fff;
+            color: #ff5722;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* tepadan va pastdan bo‘sh joy */
+        .mt-2 { margin-top: 20px; }
+        .mb-2 { margin-bottom: 20px; }
+        
+        
+
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-truck-moving fa-2x" style="color: #e74c3c;"></i>
+                <h1>Pro <span>Logistic</span></h1>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" class="translatable" data-uz="Bosh Sahifa" data-ru="Главная">Bosh Sahifa</a></li>
+                <li><a href="{% url 'about' %}"  class="translatable" data-uz="Biz Haqimizda" data-ru="О нас">Biz Haqimizda</a></li>
+                <li><a href="{% url 'service' %}" class="translatable" data-uz="Xizmatlar" data-ru="Услуги">Xizmatlar</a></li>
+                <li><a href="{% url 'contact' %}"  class="translatable" data-uz="Aloqa" data-ru="Контакты">Aloqa</a></li>
+            </ul> 
+            
+            <div class="lang-switcher">
+                <button class="active">UZ</button>
+                <button>RU</button>
+            </div>
+        </div>
+    </header>
+    
+    {% block content %}
+        
+    {% endblock content %}
+        
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="social-links">
+                        <h3>Pro Logistic</h3>  
+                        <div class="footer-col">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Toshkent, Yunusobod</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Biz sizga ishonchli, tez va arzon narxlarda yuk tashish va ko'chirish xizmatlarini taklif etamiz.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Pro Logistic. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenuBtn.addEventListener('click', (e) => {
+            navMenu.classList.toggle('active');
+            e.stopPropagation(); // Bu tugma bosilganda event yuqoriga chiqmasligi uchun
+        });
+
+        // Hujjatning boshqa joyiga bosilganda menyuni yopish
+        document.addEventListener('click', (e) => {
+            // Agar bosilgan joy navMenu yoki mobileMenuBtn bo'lmasa
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        
+        // Language Switcher
+        const langButtons = document.querySelectorAll('.lang-switcher button');
+        const translatableElements = document.querySelectorAll('.translatable');
+
+        langButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Active klassni boshqalardan olib tashlash
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const lang = this.textContent.toLowerCase(); // "uz" yoki "ru"
+
+                // Matnlarni o'zgartirish
+                translatableElements.forEach(el => {
+                    el.textContent = el.getAttribute('data-' + lang);
+                });
+            });
+        });
+
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // standart yuborishni to‘xtatadi
+        
+            const data = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value
+            };
+        
+            fetch('/contact/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': getCookie('csrftoken') // Django CSRF token
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert(result.message); // yoki HTML div ichida chiqarish mumkin
+                this.reset();           // formani tozalash
+            })
+            .catch(error => console.error('Xatolik:', error));
+        });
+        
+        // CSRF tokenni olish uchun helper function
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('.nav-menu').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
