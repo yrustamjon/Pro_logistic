@@ -683,14 +683,14 @@
             <ul class="nav-menu">
                 <li><a href="{% url 'home' %}" class="translatable" data-uz="Bosh Sahifa" data-ru="Главная">Bosh Sahifa</a></li>
                 <li><a href="{% url 'about' %}"  class="translatable" data-uz="Biz Haqimizda" data-ru="О нас">Biz Haqimizda</a></li>
-                <li><a href="{% url 'service' %}" class="translatable" data-uz="Xizmatlar" data-ru="Услуги">Xizmatlar</a></li>
+                {% comment %} <li><a href="/service" class="translatable" data-uz="Xizmatlar" data-ru="Услуги">Xizmatlar</a></li> {% endcomment %}
                 <li><a href="{% url 'contact' %}"  class="translatable" data-uz="Aloqa" data-ru="Контакты">Aloqa</a></li>
             </ul> 
             
-            <div class="lang-switcher">
+            {% comment %} <div class="lang-switcher">
                 <button class="active">UZ</button>
                 <button>RU</button>
-            </div>
+            </div> {% endcomment %}
         </div>
     </header>
     

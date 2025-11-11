@@ -64,62 +64,94 @@
 <!-- Dynamic Services Section -->
 <section id="services">
     <div class="container">
-        {%if cargos%}
-        <h1>Cargo</h1>
-
+        <div class="section-title">
+            <h2>Bizning Xizmatlar</h2>
+        </div>
+        
         <div class="services-grid">
-            {% for cargo in cargos %}
-            <div class="service-card">
-                <div class="service-img" style="background-image: url('{{ cargo.ban_image.url }}');"></div>
-                <div class="service-content">
-                    <h3>{{ cargo.name }}</h3>
-                    <p>{{ cargo.description }}</p>
-                    <a href="#" class="btn btn-outline">Batafsil</a>
+            {%for i in services%}
+            <div class="service-list">
+                <div class="service-box">
+                    <img src="{{ i.image.url }}">
+                    <h3>{{ i.name }}</h3>
+                    <p>{{ i.description }}</p>
+                    <a href="{% url i.link  %}" class="btn-red">Batafsil</a>
                 </div>
             </div>
-            {% endfor %}
+            {%endfor%}
         </div>
-        <a href="{% url 'cargo' %}" class="btn btn-outline  highlight-btn mt-2 mb-2 " >Barchasi</a>
-
-
-        {%endif%}
-        {%if materials%}
-        <h1>Qurilish Materiallari</h1>
-        <div class="services-grid">
-            {% for material in materials %}
-            <div class="service-card">
-                <div class="service-img" style="background-image: url('{{ material.ban_image.url }}');"></div>
-                <div class="service-content">
-                    <h3>{{ material.name }}</h3>
-                    <p>{{ material.description }}</p>
-                    <a href="#" class="btn btn-outline">Batafsil</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <a href="{% url 'construction_material' %}" class="btn btn-outline highlight-btn mt-2 mb-2 ">Barchasi</a>
-
-
-        {%endif%}
-        {%if furnitures%}
-        <h1>Stol-Stul</h1>
-        <div class="services-grid">
-            {% for furniture in furnitures %}
-            <div class="service-card">
-                <div class="service-img" style="background-image: url('{{ furniture.ban_image.url }}');"></div>
-                <div class="service-content">
-                    <h3>{{ furniture.name }}</h3>
-                    <p>{{ furniture.description }}</p>
-                    <a href="{% url "furniture" furniture.id %}" class="btn btn-outline">Batafsil</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <a href="{% url 'furniture' %}" class="btn btn-outline  highlight-btn mt-2 mb-2 ">Barchasi</a>
-
-        {%endif%}
     </div>
-
 </section>
+<style>
+    .service-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 22px;
+        
+        margin-top: 35px;
+    }
+    
+    .service-box {
+        background: #fff;
+        border-radius: 14px;
+        padding: 18px;
+        border: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: .25s;
+        max-width: 400px; /* 🔥 eng muhim joy — karta eni cheklanadi */
+    }
+    
+    .service-box:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    
+    .service-box img {
+        width: 100%;
+        height: 180px; /* konteyner balandligi */
+        border-radius: 10px;
+        object-fit: center; /* rasm konteynerni to‘ldiradi, markazdan kesiladi */
+        object-position: center; /* markazdan kesadi */
+        margin-bottom: 14px;
+    }
+    
+    
+    .service-box h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    
+    .service-box p {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 14px;
+    }
+    
+    .btn-red {
+        display: inline-block;
+        background: #E53935;
+        color: #fff;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: .25s;
+    }
+    
+    .btn-red:hover {
+        background: #c12727;
+    }
+    
+    @media (max-width: 600px) {
+        .service-box {
+            padding: 15px;
+            max-width: 100%; /* 📱 mobil bo‘yicha to‘liqle */
+        }
+    
+        .service-box img {
+            height: 160px;
+        }
+    }
+</style>
 
 {% endblock content %}

@@ -3,10 +3,10 @@ from django.core.paginator import Paginator
 from apps.common.models import Service, BannerImage
 from apps.service.models import CargoService, ConstructionMaterial, Furniture
 
-def service(request):
-    services = Service.objects.all().order_by('created_at')
-    print(services)
-    return render(request, 'service.html', {'services': services})
+# def service(request):
+#     services = Service.objects.all().order_by('created_at')
+#     print(services)
+#     return render(request, 'service.html', {'services': services})
 
 def service_cargo(request):
     cargo=CargoService.objects.all().order_by('-created_at')

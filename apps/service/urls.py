@@ -1,8 +1,8 @@
 from django.urls import path
-from apps.service.views import service, service_cargo,service_details0, service_details1,batafsil,batafsil0,batafsil1
+from apps.service.views import  service_cargo,service_details0, service_details1,batafsil,batafsil0,batafsil1
 
 urlpatterns = [
-    path('', service, name='service'),
+    # path('', service, name='service'),
     path('cargo/', service_cargo, name='cargo'),
     path('construction_material/', service_details0, name='construction_material'),
     path('furniture/', service_details1, name='furniture'),
