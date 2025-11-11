@@ -9,4 +9,5 @@ urlpatterns = [
     path('cargo/content_<int:pk>/', batafsil, name='batafsil'),
     path('construction_material/content_<int:pk>/', batafsil0, name='batafsil0'),
     path('furniture/content_<int:pk>/', batafsil1, name='furniture'),
+    
 ]
